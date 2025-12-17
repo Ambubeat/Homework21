@@ -3,18 +3,25 @@
 #include <cstring>
 using namespace std;
 
-CPU::CPU(char* model_, int cores_)
-    : model(new char[strlen(model_) + 1]),
+CPU::CPU(const char* model_, int cores_)
+    : 
     cores(cores_)
 {
+    
     size_t newLength = strlen(model_) + 1;
+    model = new char[newLength];
     strcpy_s(model, newLength, model_);
     cout << "Initialization" << endl;
 }
 
+CPU::CPU() {
+    model = nullptr;
+    cores = 0;
+}
+
 CPU::~CPU() {
     delete[] model;
-    cout << "Destruction" << endl;
+    cout << "Destruction CPU" << endl;
 }
 
 void CPU::setModel(const char* model_) {
@@ -25,13 +32,25 @@ void CPU::setModel(const char* model_) {
     cout << "Model set" << endl;
 }
 
-void CPU::printCPU()
+void CPU::printCPU() const
 {
-    for (size_t i = 0; i < strlen(model); i++)
-    {
-        cout << model[i];
+    cout << "CPU: model: " << model << ", cores: " << cores << endl;
+}
+
+CPU::CPU(const CPU& other)
+{
+    this->cores = other.cores;
+
+    if (other.model != nullptr) {
+        size_t newLength = strlen(other.model) + 1;
+        model = new char[newLength];
+        strcpy_s(model, newLength, other.model);
     }
-    cout << endl << cores << endl;
+    else {
+        model = nullptr;
+    }
+    cout << "Copy constructor for CPU" << endl;
+
 }
 
 void CPU::setCores(int cores_) {

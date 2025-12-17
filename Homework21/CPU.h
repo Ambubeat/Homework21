@@ -10,12 +10,13 @@ private:
     int cores;
 
 public:
-    CPU(char* model_, int cores_);
+    CPU(const char* model_, int cores_);
+    CPU();
     ~CPU();
-
     const char* getModel() const;
     int getCores() const;
     void setCores(int cores_);
     void setModel(const char* model_);
-    void printCPU();
+    void printCPU() const;
+    CPU(const CPU& other);
 };

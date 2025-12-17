@@ -5,20 +5,19 @@ using namespace std;
 #include "SSD.h"
 #include "videocard.h"
 #include "RAM.h"
+#include "Laptop.h"
 int main()
 {
 
-	char Model[] = "intel core i5";
-	CPU myCPU(Model, 5);
-	myCPU.printCPU();
-	myCPU.setModel("Obama core v2");
-	myCPU.printCPU();
-	myCPU.setCores(10);
-	myCPU.printCPU();
-	const char* corescpy = myCPU.getModel();
-	for (size_t i = 0; i < strlen(corescpy); i++)
-	{
-		cout << corescpy[i];
-	}
+	CPU myCPU("Good model", 10);
+	SSD mySSD("Model", 6);
+	videocard myCard("model V2", 9);
+	RAM myRAM("obamaram", 11);
+	char name[] = "Name";
+	char* ptr = name;
+	Laptop myLaptop(myCPU, mySSD, myRAM, myCard, "Obamarang", 100.23);
+	myLaptop.print();
+	Laptop otherLaptop(myLaptop);
+	otherLaptop.print();
 	cout << endl;
 }

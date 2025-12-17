@@ -3,18 +3,26 @@
 #include <cstring>
 using namespace std;
 
-SSD::SSD(char* model_, int storage_)
-    : model(new char[strlen(model_) + 1]),
+SSD::SSD(const char* model_, int storage_)
+    :
     storage(storage_)
 {
+
     size_t newLength = strlen(model_) + 1;
+    model = new char[newLength];
     strcpy_s(model, newLength, model_);
     cout << "Initialization" << endl;
 }
 
 SSD::~SSD() {
     delete[] model;
-    cout << "Destruction" << endl;
+    cout << "Destruction ssd" << endl;
+}
+
+SSD::SSD()
+{
+    model = nullptr;
+    storage = 0;
 }
 
 void SSD::setModel(const char* model_) {
@@ -25,13 +33,9 @@ void SSD::setModel(const char* model_) {
     cout << "Model set" << endl;
 }
 
-void SSD::printSSD()
+void SSD::printSSD() const
 {
-    for (size_t i = 0; i < strlen(model); i++)
-    {
-        cout << model[i];
-    }
-    cout << endl << storage << endl;
+    cout << "SSD: model: " << model << ", storage: " << storage << endl;
 }
 
 void SSD::setStorage(int storage_) {
@@ -45,4 +49,20 @@ const char* SSD::getModel() const {
 
 int SSD::getStorage() const {
     return storage;
+}
+
+SSD::SSD(const SSD& other)
+{
+    this->storage = other.storage;
+
+    if (other.model != nullptr) {
+        size_t newLength = strlen(other.model) + 1;
+        model = new char[newLength];
+        strcpy_s(model, newLength, other.model);
+    }
+    else {
+        model = nullptr;
+    }
+    cout << "Copy constructor for SSD" << endl;
+
 }

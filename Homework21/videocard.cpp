@@ -3,18 +3,26 @@
 #include <cstring>
 using namespace std;
 
-videocard::videocard(char* model_, int cores_)
-    : model(new char[strlen(model_) + 1]),
+videocard::videocard(const char* model_, int cores_)
+    :
     cores(cores_)
 {
+
     size_t newLength = strlen(model_) + 1;
+    model = new char[newLength];
     strcpy_s(model, newLength, model_);
     cout << "Initialization" << endl;
 }
 
 videocard::~videocard() {
     delete[] model;
-    cout << "Destruction" << endl;
+    cout << "Destruction videocard" << endl;
+}
+
+videocard::videocard()
+{
+    model = nullptr;
+    cores = 0;
 }
 
 void videocard::setModel(const char* model_) {
@@ -25,13 +33,9 @@ void videocard::setModel(const char* model_) {
     cout << "Model set" << endl;
 }
 
-void videocard::printVideocard()
+void videocard::printVideocard() const
 {
-    for (size_t i = 0; i < strlen(model); i++)
-    {
-        cout << model[i];
-    }
-    cout << endl << cores << endl;
+    cout << "Videocard: model: " << model << ", cores: " << cores << endl;
 }
 
 void videocard::setCores(int cores_) {
@@ -45,4 +49,20 @@ const char* videocard::getModel() const {
 
 int videocard::getCores() const {
     return cores;
+}
+
+videocard::videocard(const videocard& other)
+{
+    this->cores = other.cores;
+
+    if (other.model != nullptr) {
+        size_t newLength = strlen(other.model) + 1;
+        model = new char[newLength];
+        strcpy_s(model, newLength, other.model);
+    }
+    else {
+        model = nullptr;
+    }
+    cout << "Copy constructor for videocard" << endl;
+
 }

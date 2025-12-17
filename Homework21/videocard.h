@@ -10,13 +10,14 @@ private:
     int cores;
 
 public:
-    videocard(char* model_, int cores_);
+    videocard(const char* model_, int cores_);
     ~videocard();
-
+    videocard();
     const char* getModel() const;
     int getCores() const;
     void setCores(int cores_);
     void setModel(const char* model_);
-    void printVideocard();
+    void printVideocard() const;
+    videocard(const videocard& other);
 };
 

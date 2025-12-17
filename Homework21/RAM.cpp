@@ -4,18 +4,27 @@
 using namespace std;
 
 
-RAM::RAM(char* model_, int storage_)
-    : model(new char[strlen(model_) + 1]),
+RAM::RAM(const char* model_, int storage_)
+    :
     storage(storage_)
 {
+
     size_t newLength = strlen(model_) + 1;
+    model = new char[newLength];
     strcpy_s(model, newLength, model_);
     cout << "Initialization" << endl;
 }
 
+
 RAM::~RAM() {
     delete[] model;
-    cout << "Destruction" << endl;
+    cout << "Destruction ram" << endl;
+}
+
+RAM::RAM()
+{
+    model = nullptr;
+    storage = 0;
 }
 
 void RAM::setModel(const char* model_) {
@@ -26,13 +35,9 @@ void RAM::setModel(const char* model_) {
     cout << "Model set" << endl;
 }
 
-void RAM::printRAM()
+void RAM::printRAM() const
 {
-    for (size_t i = 0; i < strlen(model); i++)
-    {
-        cout << model[i];
-    }
-    cout << endl << storage << endl;
+    cout << "RAM: model: " << model << ", storage capacity: " << storage << endl;
 }
 
 void RAM::setStorage(int storage_) {
@@ -46,4 +51,20 @@ const char* RAM::getModel() const {
 
 int RAM::getStorage() const {
     return storage;
+}
+
+RAM::RAM(const RAM& other)
+{
+    this->storage = other.storage;
+
+    if (other.model != nullptr) {
+        size_t newLength = strlen(other.model) + 1;
+        model = new char[newLength];
+        strcpy_s(model, newLength, other.model);
+    }
+    else {
+        model = nullptr;
+    }
+    cout << "Copy constructor for RAM" << endl;
+
 }
